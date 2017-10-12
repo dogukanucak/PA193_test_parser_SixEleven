@@ -5,17 +5,9 @@
  */
 package pa193_test_parser_sixeleven;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.async.Callback;
+
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.request.GetRequest;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
-import junit.framework.*;
+
 
 
 /**
