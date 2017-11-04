@@ -7,6 +7,9 @@ package pa193_test_parser_sixeleven;
 
 
 import com.mashape.unirest.http.exceptions.UnirestException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 
@@ -19,13 +22,18 @@ public class PA193_test_parser_SixEleven {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws UnirestException {
-        // TODO code application logic here
-//        GetRequest request = Unirest.get("https://be.611.to/chain/SixEleven/q/getblockcount");        
-//        HttpResponse<String> response = request.asString();
-//        System.out.println(response.getBody());
-          SixElevenHttpClient client = SixElevenHttpClient.getInstance();
-          System.out.println(client.getcurrentblock());
+    public static void main(String[] args) throws UnirestException, IOException {
+        
+        TcpClient tcp_client = new TcpClient("51.255.51.50",8661);
+        tcp_client.connect();
+        tcp_client.getStream();
+          
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter Something To Close.....");
+        String s = br.readLine();
+
+//         SixElevenHttpClient client = SixElevenHttpClient.getInstance();
+//          System.out.println(client.getcurrentblock());
           
 
         

@@ -36,7 +36,8 @@ public class SixElevenHttpClient {  // Singleton Class
     // GET METHODS
      public String getcurrentblock() throws UnirestException
      {
-        GetRequest request = Unirest.get(baseUrl+"chain/SixEleven/q/getblockcount");        
+        //GetRequest request = Unirest.get(baseUrl+"chain/SixEleven/q/getblockcount");      
+        GetRequest request = Unirest.get("https://www.google.com.tr");      
         HttpResponse<String> response = request.asString();
         return response.getBody();
      }
