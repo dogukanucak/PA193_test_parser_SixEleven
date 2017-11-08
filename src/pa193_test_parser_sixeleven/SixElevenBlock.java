@@ -36,12 +36,19 @@ public class SixElevenBlock {
     private int transaction_lock_time;
     private String blockhexstring;
     private Utils utils = null;
+    private boolean blockvalid = false;
     
     public SixElevenBlock(String blockhexstring)
     {
        this.blockhexstring = blockhexstring;
+       blockvalid = hexValid(blockhexstring);
        utils = new Utils();
     }    
+    
+    public boolean ifValid()
+    {
+      return blockvalid;
+    }
     
     public String getblockhexstring()
     {
