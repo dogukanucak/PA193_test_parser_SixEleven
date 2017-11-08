@@ -29,9 +29,7 @@ public String reverseHex(String hex)
 
 public String timestampToDate(String hex){
 	long ts = hexToLong(hex);
-	
-	System.out.println(hex);
-	Date date = new Date(ts);
+	Date date = new Date(ts * 1000); //to convert Unix time to date time
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	return dateFormat.format(date);
 	

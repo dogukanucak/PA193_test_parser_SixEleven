@@ -12,26 +12,28 @@ import java.util.regex.Pattern;
  */
 public class SixElevenBlock {
 
-    private String magic_id;
+    private String magic_id; 
     private int header_length;
     private int version;
     private String previous_hash;
     private String merkle_hash;
     private String time_stamp;
-    private double difficulty;
+    private String difficulty;
     private int nonce;
-    private int transcation_count;
-    private int transcation_version;
+    private int transaction_count;
+    private int transaction_version;
     private int input_count;
-    private String transcation_hash;
-    private int transcation_index;
+    private String transaction_hash;
+    private String transaction_index;
+    private int vNumber;
     private int script_length;
-    private int input_script_length;
-    private int sequence_number;
+    private String raw_script;
+    private String sequence_number;
     private int number_of_outputs;
     private double value;
     private int output_script_length;
-    private int transcation_long_time;
+    private String output_script;
+    private int transaction_lock_time;
     private String blockhexstring;
     private Utils utils = null;
     
@@ -94,11 +96,11 @@ public class SixElevenBlock {
         this.time_stamp = time_stamp;
     }
 
-    public double getDifficulty() {
+    public String getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(double difficulty) {
+    public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -110,20 +112,20 @@ public class SixElevenBlock {
         this.nonce = nonce;
     }
 
-    public int getTranscation_count() {
-        return transcation_count;
+    public int getTransaction_count() {
+        return transaction_count;
     }
 
-    public void setTranscation_count(int transcation_count) {
-        this.transcation_count = transcation_count;
+    public void setTransaction_count(int transaction_count) {
+        this.transaction_count = transaction_count;
     }
 
-    public int getTranscation_version() {
-        return transcation_version;
+    public int getTransaction_version() {
+        return transaction_version;
     }
 
-    public void setTranscation_version(int transcation_version) {
-        this.transcation_version = transcation_version;
+    public void setTransaction_version(int transaction_version) {
+        this.transaction_version = transaction_version;
     }
 
     public int getInput_count() {
@@ -134,20 +136,28 @@ public class SixElevenBlock {
         this.input_count = input_count;
     }
 
-    public String getTranscation_hash() {
-        return transcation_hash;
+    public String getTransaction_hash() {
+        return transaction_hash;
     }
 
-    public void setTranscation_hash(String transcation_hash) {
-        this.transcation_hash = transcation_hash;
+    public void setTransaction_hash(String transaction_hash) {
+        this.transaction_hash = transaction_hash;
     }
 
-    public int getTranscation_index() {
-        return transcation_index;
+    public String getTransaction_index() {
+        return transaction_index;
     }
 
-    public void setTranscation_index(int transcation_index) {
-        this.transcation_index = transcation_index;
+    public void setTransaction_index(String transaction_index) {
+        this.transaction_index = transaction_index;
+    }
+      
+    public int getvNumber() {
+        return vNumber;
+    }
+
+    public void setvNumber(int vNumber) {
+        this.vNumber = vNumber;
     }
 
     public int getScript_length() {
@@ -158,19 +168,19 @@ public class SixElevenBlock {
         this.script_length = script_length;
     }
 
-    public int getInput_script_length() {
-        return input_script_length;
+    public String getRaw_script() {
+        return raw_script;
     }
 
-    public void setInput_script_length(int input_script_length) {
-        this.input_script_length = input_script_length;
+    public void setRaw_script(String raw_script) {
+        this.raw_script = raw_script;
     }
 
-    public int getSequence_number() {
+    public String getSequence_number() {
         return sequence_number;
     }
 
-    public void setSequence_number(int sequence_number) {
+    public void setSequence_number(String sequence_number) {
         this.sequence_number = sequence_number;
     }
 
@@ -197,13 +207,21 @@ public class SixElevenBlock {
     public void setOutput_script_length(int output_script_length) {
         this.output_script_length = output_script_length;
     }
-
-    public int getTranscation_long_time() {
-        return transcation_long_time;
+    
+    public String getOutput_script() {
+        return output_script;
     }
 
-    public void setTranscation_long_time(int transcation_long_time) {
-        this.transcation_long_time = transcation_long_time;
+    public void setOutput_script(String output_script) {
+        this.output_script = output_script;
+    }
+
+    public int getTransaction_lock_time() {
+        return transaction_lock_time;
+    }
+
+    public void setTransaction_lock_time(int transaction_lock_time) {
+        this.transaction_lock_time = transaction_lock_time;
     }
     
     public void Parse_Hex(String hexstring)
@@ -212,6 +230,7 @@ public class SixElevenBlock {
       if(hexValid(hexstring))
       
       {
+    	  System.out.println("Parsing the block...");
     	  setMagic_id(blockhexstring.substring(0, 8));
     	  setHeader_length(utils.hexToInt(blockhexstring.substring(8, 16)));
     	  setVersion(utils.hexToInt(blockhexstring.substring(16, 24)));
@@ -219,9 +238,25 @@ public class SixElevenBlock {
     	  setPrevious_hash(utils.reverseHex(blockhexstring.substring(24, 24 + 64)));
     	  setMerkle_hash(utils.reverseHex(blockhexstring.substring(88, 88 + 64)));
     	  setTime_stamp(utils.timestampToDate(blockhexstring.substring(152, 152 + 8)));
-      }
-    
-    
+    	  setDifficulty(utils.reverseHex(blockhexstring.substring(160, 160 + 8)));
+    	  setNonce(utils.hexToInt(blockhexstring.substring(168, 168 + 8)));
+    	  setTransaction_count(utils.hexToInt(blockhexstring.substring(176, 176 + 2)));
+    	  setTransaction_version(utils.hexToInt(blockhexstring.substring(178, 178 + 8)));
+    	  setInput_count(utils.hexToInt(blockhexstring.substring(186, 186 + 2)));
+    	  setTransaction_hash(utils.reverseHex(blockhexstring.substring(188, 188 + 64)));
+    	  setTransaction_index(utils.reverseHex(blockhexstring.substring(252, 252 + 8)));
+    	  setvNumber(utils.hexToInt(blockhexstring.substring(260, 260 + 4)));
+    	  //check second difficulty
+    	  setScript_length(utils.hexToInt(blockhexstring.substring(272, 272 + 2)));
+    	  setRaw_script(utils.reverseHex(blockhexstring.substring(274, 274 + 2)));
+    	  setSequence_number(utils.reverseHex(blockhexstring.substring(276, 276 + 8)));
+    	  setNumber_of_outputs(utils.hexToInt(blockhexstring.substring(284, 284 + 2)));
+    	  setValue(utils.hexToLong(blockhexstring.substring(286, 286 + 16)) / 100000000); //mili
+    	  setOutput_script_length(utils.hexToInt(blockhexstring.substring(302, 302 + 2)));
+    	  int x = 2*getOutput_script_length();
+    	  setOutput_script(utils.reverseHex(blockhexstring.substring(304, 304 + x)));
+    	  setTransaction_lock_time(utils.hexToInt(blockhexstring.substring(304 + x, 304 + x + 8)));
+      }    
     }
     
     private boolean hexValid(String hexstring)
