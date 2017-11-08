@@ -14,8 +14,9 @@ public class SixElevenBlock {
 
     private String magic_id;
     private int header_length;
-    private String version;
+    private int version;
     private String previous_hash;
+    private String merkle_hash;
     private String time_stamp;
     private double difficulty;
     private int nonce;
@@ -32,11 +33,18 @@ public class SixElevenBlock {
     private int output_script_length;
     private int transcation_long_time;
     private String blockhexstring;
+    private Utils utils = null;
     
     public SixElevenBlock(String blockhexstring)
     {
-       this.blockhexstring = blockhexstring;    
+       this.blockhexstring = blockhexstring;
+       utils = new Utils();
     }    
+    
+    public String getblockhexstring()
+    {
+    	return blockhexstring;
+    }
 
     public String getMagic_id() {
         return magic_id;
@@ -54,11 +62,11 @@ public class SixElevenBlock {
         this.header_length = header_length;
     }
 
-    public String getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 
@@ -68,6 +76,14 @@ public class SixElevenBlock {
 
     public void setPrevious_hash(String previous_hash) {
         this.previous_hash = previous_hash;
+    }
+    
+    public String getMerkle_hash() {
+        return merkle_hash;
+    }
+
+    public void setMerkle_hash(String merkle_hash) {
+        this.merkle_hash = merkle_hash;
     }
 
     public String getTime_stamp() {
@@ -196,9 +212,13 @@ public class SixElevenBlock {
       if(hexValid(hexstring))
       
       {
-           
-      
-      
+    	  setMagic_id(blockhexstring.substring(0, 8));
+    	  setHeader_length(utils.hexToInt(blockhexstring.substring(8, 16)));
+    	  setVersion(utils.hexToInt(blockhexstring.substring(16, 24)));
+    	  setPrevious_hash(utils.reverseHex(blockhexstring.substring(24, 24 + 64)));
+    	  setPrevious_hash(utils.reverseHex(blockhexstring.substring(24, 24 + 64)));
+    	  setMerkle_hash(utils.reverseHex(blockhexstring.substring(88, 88 + 64)));
+    	  setTime_stamp(utils.timestampToDate(blockhexstring.substring(152, 152 + 8)));
       }
     
     
