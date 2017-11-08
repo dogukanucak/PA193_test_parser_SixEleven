@@ -6,17 +6,32 @@ import java.util.ArrayList;
 
 public class Utils {
 
-public int hexToInt(String hex){
-	return Integer.parseInt(reverseHex(hex), 16);
-	
+public int hexToInt(String hex){ // Converts Hex to Int Value
+        try
+        {
+            return Integer.parseInt(reverseHex(hex), 16);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Block Format is Invalid");
+            return -1;
+        }
 }
 
-public long hexToLong(String hex){
+public long hexToLong(String hex){  // Converts Hex to Long Value
+       try
+       {   
 	return Long.parseLong(reverseHex(hex), 16);
+       }
+       catch(Exception e)
+       {
+          System.err.println("Block Format is Invalid");
+          return -1;
+       }
 	
 }
 
-public String reverseHex(String hex)
+public String reverseHex(String hex)  // Converts Hex Values From Reverse Order
 {  String reverse="";
 	int i;
 	for(i = hex.length() - 2; i >= 0 ; i -= 2){
@@ -28,7 +43,7 @@ public String reverseHex(String hex)
 	
 }
 
-public String timestampToDate(String hex){
+public String timestampToDate(String hex){  // Convert Hex Value To TimeStamp
 	long ts = hexToLong(hex);
 	Date date = new Date(ts * 1000); //to convert Unix time to date time
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -36,7 +51,7 @@ public String timestampToDate(String hex){
 	
 
 }
-public void displayBlock(SixElevenBlock block)
+public void displayBlock(SixElevenBlock block) // For Only Single 
 {
     if(block != null)
     {
@@ -69,7 +84,7 @@ public void displayBlock(SixElevenBlock block)
 
 
 }
-public void displayBlock(ArrayList<SixElevenBlock> blockarray)
+public void displayBlock(ArrayList<SixElevenBlock> blockarray) // Get List of Blocks and Parse Them
 {
     for(SixElevenBlock block:blockarray)
     {

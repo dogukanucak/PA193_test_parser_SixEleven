@@ -68,7 +68,14 @@ public class SixElevenBlock {
     }
 
     public void setHeader_length(int header_length) {
+        
+        if(header_length == -1)
+        {         
+          blockvalid = false;
+        }
+        
         this.header_length = header_length;
+        
     }
 
     public int getVersion() {
@@ -76,6 +83,11 @@ public class SixElevenBlock {
     }
 
     public void setVersion(int version) {
+         if(version == -1)
+        {         
+          blockvalid = false;
+        }
+        
         this.version = version;
     }
 
@@ -116,6 +128,10 @@ public class SixElevenBlock {
     }
 
     public void setNonce(int nonce) {
+         if(nonce == -1)
+        {         
+          blockvalid = false;
+        }
         this.nonce = nonce;
     }
 
@@ -124,6 +140,10 @@ public class SixElevenBlock {
     }
 
     public void setTransaction_count(int transaction_count) {
+         if(transaction_count == -1)
+        {         
+          blockvalid = false;
+        }
         this.transaction_count = transaction_count;
     }
 
@@ -140,6 +160,10 @@ public class SixElevenBlock {
     }
 
     public void setInput_count(int input_count) {
+         if(input_count == -1)
+        {         
+          blockvalid = false;
+        }
         this.input_count = input_count;
     }
 
@@ -164,6 +188,10 @@ public class SixElevenBlock {
     }
 
     public void setvNumber(int vNumber) {
+         if(vNumber == -1)
+        {         
+          blockvalid = false;
+        }
         this.vNumber = vNumber;
     }
 
@@ -172,6 +200,10 @@ public class SixElevenBlock {
     }
 
     public void setScript_length(int script_length) {
+         if(script_length == -1)
+        {         
+          blockvalid = false;
+        }
         this.script_length = script_length;
     }
 
@@ -204,6 +236,10 @@ public class SixElevenBlock {
     }
 
     public void setValue(double value) {
+         if(value == -1)
+        {         
+          blockvalid = false;
+        }
         this.value = value;
     }
 
@@ -212,6 +248,10 @@ public class SixElevenBlock {
     }
 
     public void setOutput_script_length(int output_script_length) {
+         if(output_script_length == -1)
+        {         
+          blockvalid = false;
+        }
         this.output_script_length = output_script_length;
     }
     
@@ -228,10 +268,14 @@ public class SixElevenBlock {
     }
 
     public void setTransaction_lock_time(int transaction_lock_time) {
+         if(transaction_lock_time == -1)
+        {         
+          blockvalid = false;
+        }
         this.transaction_lock_time = transaction_lock_time;
     }
     
-    public void Parse_Hex(String hexstring)
+    public void Parse_Hex(String hexstring) // Actual Parser Method
     
     {
       if(hexValid(hexstring))
@@ -239,7 +283,7 @@ public class SixElevenBlock {
       {
     	  System.out.println("Parsing the block...");
     	  setMagic_id(blockhexstring.substring(0, 8));
-    	  setHeader_length(utils.hexToInt(blockhexstring.substring(8, 16)));
+          setHeader_length(utils.hexToInt(blockhexstring.substring(8, 16)));
     	  setVersion(utils.hexToInt(blockhexstring.substring(16, 24)));
     	  setPrevious_hash(utils.reverseHex(blockhexstring.substring(24, 24 + 64)));
     	  setPrevious_hash(utils.reverseHex(blockhexstring.substring(24, 24 + 64)));
@@ -258,9 +302,17 @@ public class SixElevenBlock {
     	  setRaw_script(utils.reverseHex(blockhexstring.substring(274, 274 + 2)));
     	  setSequence_number(utils.reverseHex(blockhexstring.substring(276, 276 + 8)));
     	  setNumber_of_outputs(utils.hexToInt(blockhexstring.substring(284, 284 + 2)));
-    	  setValue(utils.hexToLong(blockhexstring.substring(286, 286 + 16)) / 100000000); //mili
+    	  setValue(utils.hexToLong(blockhexstring.substring(286, 286 + 16)) / 100000000.0); //mili
     	  setOutput_script_length(utils.hexToInt(blockhexstring.substring(302, 302 + 2)));
-    	  int x = 2*getOutput_script_length();
+    	  int x=0; 
+          if(getOutput_script_length() == -1)
+          {
+            setOutput_script("Invalid");
+          }
+          else
+          {
+            x = 2 * getOutput_script_length();
+          }
     	  setOutput_script(utils.reverseHex(blockhexstring.substring(304, 304 + x)));
     	  setTransaction_lock_time(utils.hexToInt(blockhexstring.substring(304 + x, 304 + x + 8)));
       }    
@@ -269,7 +321,7 @@ public class SixElevenBlock {
     private boolean hexValid(String hexstring)
     
     {
-      String pattern = "f9beb611[0-9a-fA-F]+";
+      String pattern = "f9beb611[0-9a-fA-F]+0000";  // Checks if the block is in the correct format
      // Create a Pattern object
       Pattern r = Pattern.compile(pattern);
       // Now create matcher object.
