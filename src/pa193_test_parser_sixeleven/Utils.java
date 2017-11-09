@@ -46,8 +46,8 @@ public String reverseHex(String hex)  // Converts Hex Values From Reverse Order
 
 public String timestampToDate(String hex){  // Convert Hex Value To TimeStamp
 	long ts = hexToLong(hex);
-	Date date = new Date(ts * 1000); //to convert Unix time to date time
-	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	Date date = new Date((ts-(2*60*60)) * 1000L); //to convert Unix time to date time
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	return dateFormat.format(date);
 	
 
