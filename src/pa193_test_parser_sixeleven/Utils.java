@@ -32,14 +32,15 @@ public long hexToLong(String hex){  // Converts Hex to Long Value
 }
 
 public String reverseHex(String hex)  // Converts Hex Values From Reverse Order
-{  String reverse="";
+{  
 	int i;
+        StringBuffer buf = new StringBuffer();
 	for(i = hex.length() - 2; i >= 0 ; i -= 2){
-		reverse +=  hex.toCharArray()[i];
-		reverse +=  hex.toCharArray()[i + 1];
+		buf.append(hex.toCharArray()[i]);
+                buf.append(hex.toCharArray()[i + 1]);
 	}	
 	
-	return reverse;
+	return buf.toString();
 	
 }
 
