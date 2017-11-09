@@ -48,6 +48,6 @@ public class PA193_test_parser_SixEleven {
     }   
     
 }
-//To produce random inputs, we used: cat /dev/urandom | tr -dc '0-9a-fA-F' | fold -w 446 | head -n 1
+//To produce random inputs, we used: cat /dev/urandom | tr -dc '0-9a-fA-F' | fold -w 446 | head -n 1 command 
 // This produces random data with the same size
 // Also we concatenated the date with correct block magic id"f9beb611"

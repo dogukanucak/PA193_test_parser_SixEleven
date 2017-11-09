@@ -36,7 +36,7 @@ public class SixElevenBlock {
     private int transaction_lock_time;
     private String blockhexstring;
     private Utils utils = null;
-    private boolean blockvalid = false;
+    private boolean blockvalid = true;
     
     public SixElevenBlock(String blockhexstring)
     {
@@ -68,10 +68,16 @@ public class SixElevenBlock {
     }
 
     public void setHeader_length(int header_length) {
-        
+      
         if(header_length == -1)
         {         
           blockvalid = false;
+        }
+        
+        else if(blockhexstring.length() != 2*header_length+16)
+        
+        {
+           blockvalid = false;          
         }
         
         this.header_length = header_length;
@@ -328,8 +334,7 @@ public class SixElevenBlock {
       Matcher m = r.matcher(hexstring);      
       return m.find();                
     }
-  
-    
-    
+      
     
 }
+
