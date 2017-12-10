@@ -1,4 +1,4 @@
-package pa193_test_parser_sixeleven;
+package pa193.sixeleven.parser;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
