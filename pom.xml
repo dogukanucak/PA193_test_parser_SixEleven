@@ -55,7 +55,6 @@
     <scm>
         <connection>scm:git:${env.SIXELEVEN_GIT_REPO}</connection>
         <developerConnection>scm:git:${env.SIXELEVEN_GIT_REPO}</developerConnection>
-        <tag>v1.0</tag>
     </scm>
 
     <dependencies>
