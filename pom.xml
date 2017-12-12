@@ -51,13 +51,11 @@
 
         <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
         <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
-
-        <git.repository>set from command line as needed</git.repository>
     </properties>
 
     <scm>
-        <connection>scm:git:${git.repository}</connection>
-        <developerConnection>scm:git:${git.repository}</developerConnection>
+        <connection>scm:git:${env.SIXELEVEN_GIT_REPO}</connection>
+        <developerConnection>scm:git:${env.SIXELEVEN_GIT_REPO}</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
