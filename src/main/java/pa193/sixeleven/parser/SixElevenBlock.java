@@ -1,18 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package pa193_test_parser_sixeleven;
+package pa193.sixeleven.parser;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /**
- *
  * @author dogukan
  */
 public class SixElevenBlock {
 
-    private String magic_id; 
+    private String magic_id;
     private int header_length;
     private int version;
     private String previous_hash;
@@ -37,29 +33,26 @@ public class SixElevenBlock {
     private String blockhexstring;
     private Utils utils = null;
     private boolean blockvalid = true;
-    
-    public SixElevenBlock(String blockhexstring)
-    {
-       this.blockhexstring = blockhexstring;
-       blockvalid = hexValid(blockhexstring);
-       utils = new Utils();
-    }    
-    
-    public boolean ifValid()
-    {
-      return blockvalid;
-    }
-    
-    public String getblockhexstring()
-    {
-    	return blockhexstring;
+
+    public SixElevenBlock(String blockhexstring) {
+        this.blockhexstring = blockhexstring;
+        blockvalid = hexValid(blockhexstring);
+        utils = new Utils();
     }
 
-    public String getMagic_id() {
+    public boolean ifValid() {
+        return blockvalid;
+    }
+
+    public String getblockhexstring() {
+        return blockhexstring;
+    }
+
+    public String getMagicId() {
         return magic_id;
     }
 
-    public void setMagic_id(String magic_id) {
+    public void setMagicId(String magic_id) {
         this.magic_id = magic_id;
     }
 
@@ -68,20 +61,12 @@ public class SixElevenBlock {
     }
 
     public void setHeader_length(int header_length) {
-      
-        if(header_length == -1)
-        {         
-          blockvalid = false;
+        if (header_length == -1) {
+            blockvalid = false;
+        } else if (blockhexstring.length() != 2 * header_length + 16) {
+            blockvalid = false;
         }
-        
-        else if(blockhexstring.length() != 2*header_length+16)
-        
-        {
-           blockvalid = false;          
-        }
-        
         this.header_length = header_length;
-        
     }
 
     public int getVersion() {
@@ -89,11 +74,9 @@ public class SixElevenBlock {
     }
 
     public void setVersion(int version) {
-         if(version == -1)
-        {         
-          blockvalid = false;
+        if (version == -1) {
+            blockvalid = false;
         }
-        
         this.version = version;
     }
 
@@ -104,7 +87,7 @@ public class SixElevenBlock {
     public void setPrevious_hash(String previous_hash) {
         this.previous_hash = previous_hash;
     }
-    
+
     public String getMerkle_hash() {
         return merkle_hash;
     }
@@ -134,9 +117,8 @@ public class SixElevenBlock {
     }
 
     public void setNonce(int nonce) {
-         if(nonce == -1)
-        {         
-          blockvalid = false;
+        if (nonce == -1) {
+            blockvalid = false;
         }
         this.nonce = nonce;
     }
@@ -146,9 +128,8 @@ public class SixElevenBlock {
     }
 
     public void setTransaction_count(int transaction_count) {
-         if(transaction_count == -1)
-        {         
-          blockvalid = false;
+        if (transaction_count == -1) {
+            blockvalid = false;
         }
         this.transaction_count = transaction_count;
     }
@@ -166,9 +147,8 @@ public class SixElevenBlock {
     }
 
     public void setInput_count(int input_count) {
-         if(input_count == -1)
-        {         
-          blockvalid = false;
+        if (input_count == -1) {
+            blockvalid = false;
         }
         this.input_count = input_count;
     }
@@ -188,15 +168,14 @@ public class SixElevenBlock {
     public void setTransaction_index(String transaction_index) {
         this.transaction_index = transaction_index;
     }
-      
+
     public int getvNumber() {
         return vNumber;
     }
 
     public void setvNumber(int vNumber) {
-         if(vNumber == -1)
-        {         
-          blockvalid = false;
+        if (vNumber == -1) {
+            blockvalid = false;
         }
         this.vNumber = vNumber;
     }
@@ -206,9 +185,8 @@ public class SixElevenBlock {
     }
 
     public void setScript_length(int script_length) {
-         if(script_length == -1)
-        {         
-          blockvalid = false;
+        if (script_length == -1) {
+            blockvalid = false;
         }
         this.script_length = script_length;
     }
@@ -242,9 +220,8 @@ public class SixElevenBlock {
     }
 
     public void setValue(double value) {
-         if(value == -1)
-        {         
-          blockvalid = false;
+        if (value == -1) {
+            blockvalid = false;
         }
         this.value = value;
     }
@@ -254,13 +231,12 @@ public class SixElevenBlock {
     }
 
     public void setOutput_script_length(int output_script_length) {
-         if(output_script_length == -1)
-        {         
-          blockvalid = false;
+        if (output_script_length == -1) {
+            blockvalid = false;
         }
         this.output_script_length = output_script_length;
     }
-    
+
     public String getOutput_script() {
         return output_script;
     }
@@ -274,67 +250,66 @@ public class SixElevenBlock {
     }
 
     public void setTransaction_lock_time(int transaction_lock_time) {
-         if(transaction_lock_time == -1)
-        {         
-          blockvalid = false;
+        if (transaction_lock_time == -1) {
+            blockvalid = false;
         }
         this.transaction_lock_time = transaction_lock_time;
     }
-    
-    public void Parse_Hex(String hexstring) // Actual Parser Method
-    
-    {
-      if(hexValid(hexstring))
-      
-      {
-    	  System.out.println("Parsing the block...");
-    	  setMagic_id(blockhexstring.substring(0, 8));
-          setHeader_length(utils.hexToInt(blockhexstring.substring(8, 16)));
-    	  setVersion(utils.hexToInt(blockhexstring.substring(16, 24)));
-    	  setPrevious_hash(utils.reverseHex(blockhexstring.substring(24, 24 + 64)));
-    	  setPrevious_hash(utils.reverseHex(blockhexstring.substring(24, 24 + 64)));
-    	  setMerkle_hash(utils.reverseHex(blockhexstring.substring(88, 88 + 64)));
-    	  setTime_stamp(utils.timestampToDate(blockhexstring.substring(152, 152 + 8)));
-    	  setDifficulty(utils.reverseHex(blockhexstring.substring(160, 160 + 8)));
-    	  setNonce(utils.hexToInt(blockhexstring.substring(168, 168 + 8)));
-    	  setTransaction_count(utils.hexToInt(blockhexstring.substring(176, 176 + 2)));
-    	  setTransaction_version(utils.hexToInt(blockhexstring.substring(178, 178 + 8)));
-    	  setInput_count(utils.hexToInt(blockhexstring.substring(186, 186 + 2)));
-    	  setTransaction_hash(utils.reverseHex(blockhexstring.substring(188, 188 + 64)));
-    	  setTransaction_index(utils.reverseHex(blockhexstring.substring(252, 252 + 8)));
-    	  setvNumber(utils.hexToInt(blockhexstring.substring(260, 260 + 4)));
-    	  //check second difficulty
-    	  setScript_length(utils.hexToInt(blockhexstring.substring(272, 272 + 2)));
-    	  setRaw_script(utils.reverseHex(blockhexstring.substring(274, 274 + 2)));
-    	  setSequence_number(utils.reverseHex(blockhexstring.substring(276, 276 + 8)));
-    	  setNumber_of_outputs(utils.hexToInt(blockhexstring.substring(284, 284 + 2)));
-    	  setValue(utils.hexToLong(blockhexstring.substring(286, 286 + 16)) / 100000000.0); //mili
-    	  setOutput_script_length(utils.hexToInt(blockhexstring.substring(302, 302 + 2)));
-    	  int x=0; 
-          if(getOutput_script_length() == -1)
-          {
-            setOutput_script("Invalid");
-          }
-          else
-          {
-            x = 2 * getOutput_script_length();
-          }
-    	  setOutput_script(utils.reverseHex(blockhexstring.substring(304, 304 + x)));
-    	  setTransaction_lock_time(utils.hexToInt(blockhexstring.substring(304 + x, 304 + x + 8)));
-      }    
+
+    /**
+     * Actual Parser Method
+     *
+     * @param hexstring
+     */
+    public void Parse_Hex(String hexstring) {
+        if (hexValid(hexstring)) {
+            System.out.println("Parsing the block...");
+            setMagicId(blockhexstring.substring(0, 8));
+            setHeader_length(utils.hexToInt(blockhexstring.substring(8, 16)));
+            setVersion(utils.hexToInt(blockhexstring.substring(16, 24)));
+            setPrevious_hash(utils.reverseHex(blockhexstring.substring(24, 24 + 64)));
+            setPrevious_hash(utils.reverseHex(blockhexstring.substring(24, 24 + 64)));
+            setMerkle_hash(utils.reverseHex(blockhexstring.substring(88, 88 + 64)));
+            setTime_stamp(utils.timestampToDate(blockhexstring.substring(152, 152 + 8)));
+            setDifficulty(utils.reverseHex(blockhexstring.substring(160, 160 + 8)));
+            setNonce(utils.hexToInt(blockhexstring.substring(168, 168 + 8)));
+            setTransaction_count(utils.hexToInt(blockhexstring.substring(176, 176 + 2)));
+            setTransaction_version(utils.hexToInt(blockhexstring.substring(178, 178 + 8)));
+            setInput_count(utils.hexToInt(blockhexstring.substring(186, 186 + 2)));
+            setTransaction_hash(utils.reverseHex(blockhexstring.substring(188, 188 + 64)));
+            setTransaction_index(utils.reverseHex(blockhexstring.substring(252, 252 + 8)));
+            setvNumber(utils.hexToInt(blockhexstring.substring(260, 260 + 4)));
+            //check second difficulty
+            setScript_length(utils.hexToInt(blockhexstring.substring(272, 272 + 2)));
+            setRaw_script(utils.reverseHex(blockhexstring.substring(274, 274 + 2)));
+            setSequence_number(utils.reverseHex(blockhexstring.substring(276, 276 + 8)));
+            setNumber_of_outputs(utils.hexToInt(blockhexstring.substring(284, 284 + 2)));
+            setValue(utils.hexToLong(blockhexstring.substring(286, 286 + 16)) / 100000000.0); //mili
+            setOutput_script_length(utils.hexToInt(blockhexstring.substring(302, 302 + 2)));
+            int x = 0;
+            if (getOutput_script_length() == -1) {
+                setOutput_script("Invalid");
+            } else {
+                x = 2 * getOutput_script_length();
+            }
+            setOutput_script(utils.reverseHex(blockhexstring.substring(304, 304 + x)));
+            setTransaction_lock_time(utils.hexToInt(blockhexstring.substring(304 + x, 304 + x + 8)));
+        }
     }
-    
-    private boolean hexValid(String hexstring)
-    
-    {
-      String pattern = "f9beb611[0-9a-fA-F]+0000";  // Checks if the block is in the correct format
-     // Create a Pattern object
-      Pattern r = Pattern.compile(pattern);
-      // Now create matcher object.
-      Matcher m = r.matcher(hexstring);      
-      return m.find();                
+
+    /**
+     * TODO - Doc
+     *
+     * @param hexstring
+     * @return
+     */
+    private boolean hexValid(String hexstring) {
+        String pattern = "f9beb611[0-9a-fA-F]+0000";  // Checks if the block is in the correct format
+        // Create a Pattern object
+        Pattern r = Pattern.compile(pattern);
+        // Now create matcher object.
+        Matcher m = r.matcher(hexstring);
+        return m.find();
     }
-      
-    
 }
 
