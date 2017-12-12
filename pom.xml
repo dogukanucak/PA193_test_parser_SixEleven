@@ -58,6 +58,14 @@
         <tag>HEAD</tag>
     </scm>
 
+    <distributionManagement>
+        <repository>
+            <id>internal.repo</id>
+            <name>This is just an internal repository for demonstration purposes.</name>
+            <url>file://${project.build.directory}/repository</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
