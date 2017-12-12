@@ -30,12 +30,6 @@
         </developer>
     </developers>
 
-    <scm>
-        <connection>scm:git:${GIT_REPOSITORY}</connection>
-        <developerConnection>scm:git:${GIT_REPOSITORY}</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- maven-compiler-plugin -->
@@ -57,7 +51,15 @@
 
         <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
         <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
+
+        <git.repository>set from command line as needed</git.repository>
     </properties>
+
+    <scm>
+        <connection>scm:git:${git.repository}</connection>
+        <developerConnection>scm:git:${git.repository}</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
     <dependencies>
         <dependency>
