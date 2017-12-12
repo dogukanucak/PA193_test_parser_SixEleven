@@ -3,7 +3,7 @@
 
     <groupId>pa193.sixeleven</groupId>
     <artifactId>parser</artifactId>
-    <version>1.0</version>
+    <version>1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>pa193_test_parser_sixeleven</name>
@@ -55,8 +55,8 @@
     <scm>
         <connection>scm:git:${env.SIXELEVEN_GIT_REPO}</connection>
         <developerConnection>scm:git:${env.SIXELEVEN_GIT_REPO}</developerConnection>
-      <tag>v1.0</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <dependencies>
         <dependency>
