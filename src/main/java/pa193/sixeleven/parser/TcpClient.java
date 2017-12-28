@@ -35,7 +35,12 @@ public class TcpClient {
             //Host not found
             catch (UnknownHostException e) {
                 System.err.println("Don't know about host : " + host);
-                System.exit(1);
+                
+                StringBuilder sb = new StringBuilder();
+                sb.append("Host ");
+                sb.append(host);
+                sb.append(" not found.");
+                throw new RuntimeException(sb.toString());
             }
             connected = true;
             System.out.println("Connected");
