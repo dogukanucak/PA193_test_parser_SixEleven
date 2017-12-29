@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import javax.net.ssl.SSLSocketFactory;
 
 /**
  * @author dogukan
@@ -22,14 +23,24 @@ public class TcpClient {
     TcpClient(String host, int portnumber) {
         this.host = host;
         this.portnumber = portnumber;
-        s = new Socket();
+        if(portnumber != 443)
+        {
+            s = new Socket();
+        }
     }
 
     public void connect() throws IOException {
 
         if (!connected) {
             try {
-                s.connect(new InetSocketAddress(host, portnumber));
+                if(portnumber != 443)
+                {
+                    s.connect(new InetSocketAddress(host, portnumber));
+                }
+                else
+                {
+                    s = SSLSocketFactory.getDefault().createSocket(host, portnumber);
+                }
             }
 
             //Host not found
