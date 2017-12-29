@@ -60,7 +60,7 @@ public class TcpClient {
 
             byte buf[] = hexStringToByteArray("f9beb61176657273696f6e00000000005500000059f18defacee00000100000000000000a8a7f55900000000010000000000000000000000000000000000ffff33ff333221d5010000000000000000000000000000000000ffff93fbc54b21d5d59c21be9687613700d4e10200");
             out.write(buf);
-            String response = "";
+            StringBuilder sb = new StringBuilder();
 
             InputStream in = s.getInputStream();
             int c = 0;
@@ -70,7 +70,7 @@ public class TcpClient {
 
                     bw.write(c);
                     System.out.print(Integer.toHexString(c));
-                    response += (char) c;
+                    sb.append((char) c);
                 } catch (IOException e) {
 
                     e.printStackTrace();
@@ -78,6 +78,7 @@ public class TcpClient {
                 }
             }
 
+            String response = sb.toString();
         }
 
 //         System.out.println("");
