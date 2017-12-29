@@ -30,8 +30,8 @@ public class SixElevenBlock {
     private int output_script_length;
     private String output_script;
     private int transaction_lock_time;
-    private String blockhexstring;
-    private Utils utils = null;
+    private final String blockhexstring;
+    private final Utils utils;
     private boolean blockvalid = true;
 
     public SixElevenBlock(String blockhexstring) {

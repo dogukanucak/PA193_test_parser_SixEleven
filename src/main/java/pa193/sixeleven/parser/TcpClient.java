@@ -14,8 +14,8 @@ import java.net.UnknownHostException;
  * @author dogukan
  */
 public class TcpClient {
-    private String host = null;
-    private int portnumber = 0;
+    private final String host;
+    private final int portnumber;
     private boolean connected = false;
     private Socket s = null;
 
