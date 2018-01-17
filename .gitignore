@@ -2,3 +2,6 @@
 /build/
 /dist/
 /bin/
+.idea/
+parser.iml
+target/
