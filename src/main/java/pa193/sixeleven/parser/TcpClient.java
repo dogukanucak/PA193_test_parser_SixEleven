@@ -2,13 +2,16 @@ package pa193.sixeleven.parser;
 
 
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 
 /**
  * @author dogukan
@@ -71,7 +74,7 @@ public class TcpClient {
             int c = 0;
 
             while ((c = in.read()) != -1) {
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter("blockchain.dat", true))) {
+                try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("blockchain.dat", true), Charset.forName("US-ASCII")))) {
 
                     bw.write(c);
                     System.out.print(Integer.toHexString(c));
