@@ -10,6 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import javax.net.ssl.SSLSocketFactory;
+import java.nio.charset.Charset;
 
 /**
  * @author dogukan
