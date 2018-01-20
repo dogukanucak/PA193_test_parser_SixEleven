@@ -2,8 +2,11 @@ package pa193.sixeleven.parser;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +26,7 @@ public class PA193_test_parser_SixEleven {
         File file = new File("testblk.txt");
         //Simple Check If File Is Exists
         if (file.exists() && !file.isDirectory()) {
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charset.forName("US-ASCII")));
             String line;
             while ((line = br.readLine()) != null) {
                 blocklist.add(new SixElevenBlock(line));

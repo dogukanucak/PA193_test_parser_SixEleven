@@ -2,7 +2,7 @@ package pa193.sixeleven.parser;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Utils {
 
@@ -108,7 +108,7 @@ public class Utils {
      *
      * @param blockarray
      */
-    public void displayBlock(ArrayList<SixElevenBlock> blockarray) {
+    public void displayBlock(List<SixElevenBlock> blockarray) {
         for (SixElevenBlock block : blockarray) {
             if (block != null) {
                 block.Parse_Hex(block.getblockhexstring());
