@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import java.util.Locale;
+
 public class Utils {
 
     /**
@@ -64,7 +66,7 @@ public class Utils {
     public String timestampToDate(String hex) {
         long ts = hexToLong(hex);
         Date date = new Date((ts - (2 * 60 * 60)) * 1000L); // to convert Unix time to date time
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.UK);
         return dateFormat.format(date);
 
 
