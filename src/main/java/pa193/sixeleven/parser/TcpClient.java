@@ -2,40 +2,62 @@ package pa193.sixeleven.parser;
 
 
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLSocketFactory;
+
+
+import java.nio.charset.Charset;
 
 /**
  * @author dogukan
  */
 public class TcpClient {
-    private String host = null;
-    private int portnumber = 0;
+    private final String host;
+    private final int portnumber;
     private boolean connected = false;
     private Socket s = null;
 
     TcpClient(String host, int portnumber) {
         this.host = host;
         this.portnumber = portnumber;
-        s = new Socket();
+        if(portnumber != 443)
+        {
+            s = new Socket();
+        }
     }
 
     public void connect() throws IOException {
 
         if (!connected) {
             try {
-                s.connect(new InetSocketAddress(host, portnumber));
+                if(portnumber != 443)
+                {
+                    s.connect(new InetSocketAddress(host, portnumber));
+                }
+                else
+                {
+                    s = SSLSocketFactory.getDefault().createSocket(host, portnumber);
+                }
             }
 
             //Host not found
             catch (UnknownHostException e) {
                 System.err.println("Don't know about host : " + host);
-                System.exit(1);
+                
+                StringBuilder sb = new StringBuilder();
+                sb.append("Host ");
+                sb.append(host);
+                sb.append(" not found.");
+                throw new RuntimeException(sb.toString());
             }
             connected = true;
             System.out.println("Connected");
@@ -60,17 +82,17 @@ public class TcpClient {
 
             byte buf[] = hexStringToByteArray("f9beb61176657273696f6e00000000005500000059f18defacee00000100000000000000a8a7f55900000000010000000000000000000000000000000000ffff33ff333221d5010000000000000000000000000000000000ffff93fbc54b21d5d59c21be9687613700d4e10200");
             out.write(buf);
-            String response = "";
+            StringBuilder sb = new StringBuilder();
 
             InputStream in = s.getInputStream();
             int c = 0;
 
             while ((c = in.read()) != -1) {
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter("blockchain.dat", true))) {
+                try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("blockchain.dat", true), Charset.forName("US-ASCII")))) {
 
                     bw.write(c);
                     System.out.print(Integer.toHexString(c));
-                    response += (char) c;
+                    sb.append((char) c);
                 } catch (IOException e) {
 
                     e.printStackTrace();
@@ -78,6 +100,7 @@ public class TcpClient {
                 }
             }
 
+            String response = sb.toString();
         }
 
 //         System.out.println("");

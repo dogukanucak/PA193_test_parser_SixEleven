@@ -30,8 +30,8 @@ public class SixElevenBlock {
     private int output_script_length;
     private String output_script;
     private int transaction_lock_time;
-    private String blockhexstring;
-    private Utils utils = null;
+    private final String blockhexstring;
+    private final Utils utils;
     private boolean blockvalid = true;
 
     public SixElevenBlock(String blockhexstring) {
@@ -292,8 +292,16 @@ public class SixElevenBlock {
             } else {
                 x = 2 * getOutput_script_length();
             }
-            setOutput_script(utils.reverseHex(blockhexstring.substring(304, 304 + x)));
-            setTransaction_lock_time(utils.hexToInt(blockhexstring.substring(304 + x, 304 + x + 8)));
+            if (304 + x + 8 == blockhexstring.length())
+            {
+                setOutput_script(utils.reverseHex(blockhexstring.substring(304, 304 + x)));
+                setTransaction_lock_time(utils.hexToInt(blockhexstring.substring(304 + x, 304 + x + 8)));
+            }
+            else
+            {
+                blockvalid = false;
+                setOutput_script("Invalid");
+            }
         }
     }
 
